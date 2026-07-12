@@ -1,0 +1,497 @@
+<!--
+Program name: index3.html
+Author: Saadet Kalayci
+Date created: 7/3/26
+Date last edited: 
+Version: 1.0
+Description: This is an online new client registration form for a dermatology office named "Skin Serenity Dermatology"
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<link rel="stylesheet" href="styles3.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<title>New Client Form</title>
+</head>
+
+<body onload="checkCookie()">
+<h2 id="welcomeMessage"></h2>
+
+<div id="newUserOption"></div>
+<img src="https://masterbundles.com/wp-content/uploads/2023/03/beauty-ai-491.jpg" alt="Skincare Logo">
+
+<h1> Skin Serenity Dermatology</h1>
+
+<!--
+h1 represents the name of the Dermatology clinic.
+-->
+
+<h4 id="todaysdate"></h4>
+
+<script>
+const datetext = "Today's date: ";
+const date = new Date(); 
+document.getElementById("todaysdate").innerHTML= datetext + date.toDateString();
+</script>
+
+<!--
+The dynamic date will be displayed as a <h4> 
+-->  
+
+<h2> New Client Registration Form</h2>
+
+<hr>
+
+<!--
+h2 displays a title on the page stating the purpose
+-->
+
+<form id="regisform" action="submit3.html" onsubmit="saveUser();">
+<!-- 
+The form inputs are organized in a table.
+All required fields are indicated.
+The user can see which fields are required via the placeholder attribue.
+-->
+
+<div>
+
+<h3>New Client Information</h3>
+
+<table>
+<tr>
+   <td>
+   <label for="clientid">Desired User ID: </label>
+   <input type="text" 
+	id= "clientid" name="clientid"
+	minlength = "2" 
+	maxlength = "20" 
+	placeholder="required" 
+	required
+	oninput="validateClientId()">
+<br>
+<p id="errorId"></p>
+   </td>
+ </tr>
+<tr>
+   <td>
+   <label for="fname">First Name: </label>
+   <input type="text" 
+	id="fname" name="fname"
+	minlength = "1" 
+	maxlength = "30" 
+	placeholder= "required" 
+	required
+	oninput="validateFname()">
+<br>
+<p id="errorFname"></p>
+   </td>
+ </tr>
+<tr>
+<td>
+     <label for="password">Password:</label>
+     <input type="password" 
+	id="password" name="password" 
+	placeholder= "required" 
+	oninput="validatePassword()";
+	required>
+<br>
+<p id="errorPassword"></p>
+
+    </td>
+ </tr>
+ <tr>
+    <td>
+     <label for="reenter">Re-enter password:</label>
+     <input type="password" 
+	id="reenter" name="reenter" 
+	placeholder= "required" 
+	oninput = "validateReenter()"
+	required>
+<br>
+<p id=errorReenter></p>
+
+    </td>
+ </tr>
+ <tr>
+   <td>
+   <label for="mname">Middle Initial: </label>
+   <input type="text" 
+	id="mname" name="mname"
+	maxlength = "1" 
+	oninput="validateMname()">
+<br>
+<p id="errorMname"></p>
+   </td>
+ </tr>
+ <tr>
+   <td>
+   <label for="lname">Last Name: </label>
+   <input type="text" 
+	id="lname" name="lname"
+	minlength = "1" 
+	maxlength = "30" 
+	placeholder= "required" 
+	required
+	oninput="validateLname()">
+<br>
+<p id="errorLname"></p>
+   </td>
+ </tr>
+ <tr>
+   <td>
+   <label for="dob">Date of Birth: </label>
+   <input type="date" 
+	id="dob" name="dob"  
+	required
+	oninput="validateDob()">
+<br>
+<p id="errorDob"></p>
+   </td>
+ </tr>
+ <tr>
+   <td>
+   <label for="ssn">Social Security Number: </label>
+   <input type="password" 
+	id="ssn" name="ssn"
+	minlength = "9" 
+	maxlength = "15"
+	pattern="[0-9]{3}-[0-9]{2}-[0-9]{4}" 
+	placeholder= "999-99-9999" 
+	required
+	oninput="validateSSN()">
+<br>
+<p id="errorSSN"></p>
+   </td>
+ </tr>
+</table>
+</div>
+
+<hr>
+
+<!-- i put a line between each area to further separate them via <hr> -->
+
+<div>
+
+<h3> Client Contact Information</h3>
+<table>
+<tr>
+   <td>
+   <label for="email">Email Address: </label>
+   <input type="email" 
+	id="email" name="email"
+	minlength = "10" 
+	maxlength = "30" 
+	placeholder= "required" 
+	required
+	pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
+	oninput="validateEmail()">
+<br>
+<p id="errorEmail"></p>
+   </td>
+ </tr>
+ <tr>
+   <td>
+   <label for="phone">Phone Number: </label>
+   <input type="tel" 
+	id="phone" name="phone"
+	minlength = "10" 
+	maxlength= "15" 
+	placeholder="999-999-9999" 
+	pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" 
+	required
+	oninput="validatePhone()">
+<br>
+<p id="errorPhone"></p>
+</td>
+ </tr>
+</table>
+</div>
+
+<hr>
+
+<div>
+<h3>Mailing Address</h3>
+<table>
+<tr>
+   <td>
+   <label for="addr1">Address Line 1: </label>
+   <input type="text" 
+	id="addr1" name="addr1"
+	minlength="2"
+	maxlength = "30" 
+	placeholder= "required"
+	required
+	oninput="validateAddr1()">
+<br>
+<p id="errorAddr1"></p>
+
+   </td>
+    </tr>
+ <tr>
+   <td>
+   <label for="addr2">Address Line 2: </label>
+   <input type="text" 
+	id="addr2" name="addr2"
+	minlength = "2"
+	maxlength = "30"
+	oninput="validateAddr2()">
+<br>
+<p id="errorAddr2"></p>
+
+   </td>
+
+ </tr> 
+ <tr>
+   <td>
+   <label for="city">City: </label>
+   <input type="text" 
+	id="city" name="city"
+	minlength="2" 
+	maxlength = "30" 
+	placeholder= "required" 
+	required
+	oninput="validateCity()">
+<br>
+<p id="errorCity"></p>
+
+   </td>
+ </tr>
+ <tr>
+   <td>
+   <label for="state">State:</label>
+    <select id="state" name="state" required>
+        <option value="">Select a State</option>
+        <option value="AL">Alabama</option>
+        <option value="AK">Alaska</option>
+        <option value="AZ">Arizona</option>
+        <option value="AR">Arkansas</option>
+        <option value="CA">California</option>
+        <option value="CO">Colorado</option>
+        <option value="CT">Connecticut</option>
+        <option value="DE">Delaware</option>
+        <option value="FL">Florida</option>
+        <option value="GA">Georgia</option>
+        <option value="HI">Hawaii</option>
+        <option value="ID">Idaho</option>
+        <option value="IL">Illinois</option>
+        <option value="IN">Indiana</option>
+        <option value="IA">Iowa</option>
+        <option value="KS">Kansas</option>
+        <option value="KY">Kentucky</option>
+        <option value="LA">Louisiana</option>
+        <option value="ME">Maine</option>
+        <option value="MD">Maryland</option>
+        <option value="MA">Massachusetts</option>
+        <option value="MI">Michigan</option>
+        <option value="MN">Minnesota</option>
+        <option value="MS">Mississippi</option>
+        <option value="MO">Missouri</option>
+        <option value="MT">Montana</option>
+        <option value="NE">Nebraska</option>
+        <option value="NV">Nevada</option>
+        <option value="NH">New Hampshire</option>
+        <option value="NJ">New Jersey</option>
+        <option value="NM">New Mexico</option>
+        <option value="NY">New York</option>
+        <option value="NC">North Carolina</option>
+        <option value="ND">North Dakota</option>
+        <option value="OH">Ohio</option>
+        <option value="OK">Oklahoma</option>
+        <option value="OR">Oregon</option>
+        <option value="PA">Pennsylvania</option>
+        <option value="RI">Rhode Island</option>
+        <option value="SC">South Carolina</option>
+        <option value="SD">South Dakota</option>
+        <option value="TN">Tennessee</option>
+        <option value="TX">Texas</option>
+        <option value="UT">Utah</option>
+        <option value="VT">Vermont</option>
+        <option value="VA">Virginia</option>
+        <option value="WA">Washington</option>
+        <option value="WV">West Virginia</option>
+        <option value="WI">Wisconsin</option>
+        <option value="WY">Wyoming</option>
+    </select>
+   </td>
+ </tr>
+ <tr>
+   <td>
+   <label for="zipcode">Zip Code: </label>
+   <input type="text" 
+	id="zipcode" name="zipcode"
+	minlength="5" 
+	maxlength = "10"
+	pattern="[0-9]{5}(-[0-9]{4})?" 
+	placeholder= "required" 
+	required
+	oninput="validateZipcode()">
+<br>
+<p id="errorZipcode"></p>
+
+   </td>
+ </tr>
+</table>
+</div>
+
+<hr>
+
+<div>
+<h3>Patient Information</h3>
+<table>
+<tr>
+   <td>
+   <label for="skinconcern">Describe your skin concerns and symptoms: </label>
+<br>
+<textarea 
+	id="skinconcern" name="skinconcern" 
+	rows="3" cols="50" 
+	maxlength= "200" 
+	placeholder="Enter symptoms here" 
+	required
+	oninput="validateSkinconcern()">
+</textarea>
+<br>
+<p id="errorSkinconcern"></p>
+</td>
+</tr>
+<tr>
+ <td>
+ <div id="terms"></div>
+</td>
+</tr>
+<!--
+The user is asked to state their skin concerns in a text area.
+-->
+
+ <tr>
+   <td>
+   <label for= "allergy"> Do you have allergies to any of the listed?:</label>
+<br>
+   <label for="allergy1">Latex</label>
+   <input type="checkbox" id="allergy1" name="allergy1" value="Latex">
+<br>
+    <label for="allergy2">Penicillin</label>
+   <input type="checkbox" id="allergy2" name="allergy2" value="Penicillin">
+<br>
+    <label for="allergy3">Fragrances</label>
+   <input type="checkbox" id="allergy3" name="allergy3" value="Fragrances">
+<br>
+    <label for="allergy4">Adhesives/Bandages</label>
+   <input type="checkbox" id="allergy4" name="allergy4" value="Adhesives/Bandages">
+<br>
+    <label for="allergy5">Topical Antibiotics</label>
+   <input type="checkbox" id="allergy5" name="allergy5" value="Topical Antibiotics">
+<br>
+   <label for= "allergy6">None</label>
+   <input type="checkbox" id="allergy6" name="allergy6" value="None">
+   </td>
+ </tr>
+ <tr>
+   <td>
+   <label for="pregnant">Are you pregnant?</label>
+   <input type="radio" id="pregyes" name= "pregnant" value="yes" required>
+   <label for="pregyes">Yes</label>
+   <input type="radio" id="pregno" name="pregnant" value="no" required>
+   <label for= "pregno">No</label>
+   </td>
+ </tr>
+ <tr>
+   <td>
+   <label for="insurance">Do you have insurance?</label>
+   <input type="radio" id="insyes" name= "insurance" value="yes" required>
+   <label for="insyes">Yes</label>
+   <input type= "radio" id="insno" name="insurance" value="no"required>
+   <label for= "insno"> No </label>
+   </td>
+ </tr>
+ <tr>
+   <td>
+   <label for="smoking">Do you smoke?</label>
+   <input type="radio" id="smokeyes" name="smoking" value="yes" required>
+   <label for="smokeyes">Yes</label>
+   <input type= "radio" id="smokeno" name="smoking" value="no" required>
+   <label for= "smokeno"> No </label>
+   </td>
+ </tr>
+ <tr>
+   <td>
+    <label for="skinrating">Rate how sensitive your skin is from less sensitive to very sensitive:</label>
+   <input type="range" id="skinrating" name="skinrating" min="0" max="10" required>
+   </td>
+ </tr> 
+<tr>
+  <td>
+   <label for="frequency">How often do you experience flare-ups?</label>
+   <input type="range" id="frequency" name="frequency" min="0" max="100" required>
+
+   <span id="freqdisplay">0</span>
+
+<!--
+I used javascript to put in a slidebar that asks the user how often they get flare ups
+-->
+
+   <script>
+  var slidebar = document.getElementById("frequency");
+  var flareups = document.getElementById("freqdisplay");
+  flareups.innerHTML = slidebar.value; 
+  slidebar.oninput = function() {
+  flareups.innerHTML = this.value;
+}
+</script>
+  </td>
+</tr>
+ <tr>
+    <td> 
+<input type="checkbox" id="rememberMe" checked>
+<label for="rememberMe">Remember Me</label>
+     <input type="submit" value="Submit" id="submit" name="submit">
+     <input type="reset" value="Reset" id="reset" name="reset">
+     
+
+   </td>
+ </tr>
+</table>
+</div>
+
+<h2>More Cosmetic Services we Offer:</h2>
+<iframe 
+ src="services.html"
+ width="400"
+ height="250"
+ title="Additional Cosmetic Services">
+</iframe>
+
+<div class="footer">
+<h3> Contact Us </h3>
+ <table>
+  <tr>
+  <td> Email: SkinSerenity@gmail.com</td>
+  <td>Instagram: @skinserenity</td>
+ </tr>
+
+ <tr>
+  <td>PO BOX 66667</td>
+  <td> Houston, TX 77067</td>
+ </tr>
+
+ <tr>
+   <td>
+  <input type="button" onclick="alert('Call: 832-696-6767')" value="Contact Us!">
+   </td>
+   <td>
+<input type="button" onclick="alert('Pretend Terms and Conditions')" value="Terms and Conditions">
+</td>
+</tr>
+
+</table>
+</div>
+
+<hr>
+
+<script src="script.js"></script>
+
+</body>
+</html>
